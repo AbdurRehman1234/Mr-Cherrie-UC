@@ -22,7 +22,8 @@ class FarEastSpider(scrapy.Spider):
         item['Low'] = response.css("#priceLow::text").extract_first()
         item['Volume'] = response.css('#volume::text').extract_first()
         volume_bs_list = response.css('#volumeBuySell span::text').getall()
-        item['volume_bs'] = f"{volume_bs_list[0]} / {volume_bs_list[1]}"
+        # item['volume_bs'] = f"{volume_bs_list[0]} / {volume_bs_list[1]}"
+        item['volume_bs'] = "{first_volume} / {second_volume}".format(first_volume=volume_bs_list[0], second_volume={volume_bs_list[1]})
         price_list = response.css("#priceBidAsk span::text").getall()
         item["price"] = f"{price_list[0]} / {price_list[1]}"
         item['fiftytwoW'] = response.xpath('//td[text()="52w"]/following-sibling::td[1]/text()').get()
